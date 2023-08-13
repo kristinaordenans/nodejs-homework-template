@@ -1,6 +1,3 @@
-
-// import contactsService from '../models/contact.js'
-
 import Contact from '../models/contact.js'
 
 import cnrWrapper from '../decorators/cnrWrapper.js';
