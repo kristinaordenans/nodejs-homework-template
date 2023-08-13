@@ -31,19 +31,19 @@ const getList = async (req, res, next) => {
 //   }
 // }
 
-// const addContact = async (req, res, next) => {
-//   try {
-//     const { error } = contactAddSchema.validate(req.body)
-//     if (error) {
-//       throw HttpError(400,"missing required name field")
-//     }
-//     const result = await contactsService.addContact(req.body);
-//     res.status(201).json(result);
-//   }
-//   catch (error) {
-//     next(error);
-//   }
-// }
+const addContact = async (req, res, next) => {
+  try {
+    // const { error } = contactAddSchema.validate(req.body)
+    // if (error) {
+    //   throw HttpError(400,"missing required name field")
+    // }
+    const result = await Contact.create(req.body);
+    res.status(201).json(result);
+  }
+  catch (error) {
+    next(error);
+  }
+}
 
 // const delContact = async (req, res, next) => {
 //   try {
@@ -78,9 +78,9 @@ const getList = async (req, res, next) => {
 // }
 
 export default {
-    getList,
+  getList,
+  addContact,
     // getContactById,
-    // addContact,
     // delContact,
     // updateContact
 }
