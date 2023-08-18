@@ -19,8 +19,9 @@ const userSchema = new Schema({
         default: "starter",
     },
     token: {
-        token: String,
-    }
+        type: String,
+    },
+    
 }, { versionKey: false, timestemps: true });
 
 userSchema.pre("findOneAndUpdate", handleUpdateValidate);

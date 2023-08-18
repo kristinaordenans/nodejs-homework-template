@@ -15,19 +15,17 @@ import isEmptyBody from '../../middlewares/isEmptyBody.js'
 
 const contactsRouter = express.Router()
 
-contactsRouter.use(authenticate);
+contactsRouter.get('/',authenticate, contactsController.getList )
 
-contactsRouter.get('/', contactsController.getList )
+contactsRouter.get('/:contactId',authenticate, isValidId, contactsController.getContactById )
 
-contactsRouter.get('/:contactId', isValidId, contactsController.getContactById )
+contactsRouter.post('/',authenticate, isEmptyBody, validateBody(contactSchemas.contactAddSchema),contactsController.addContact )
 
-contactsRouter.post('/', isEmptyBody, validateBody(contactSchemas.contactAddSchema),contactsController.addContact )
+contactsRouter.delete('/:contactId', authenticate, isValidId, contactsController.delContact )
 
-contactsRouter.delete('/:contactId', isValidId, contactsController.delContact )
+contactsRouter.put('/:contactId', authenticate, isEmptyBody, isValidId, validateBody(contactSchemas.contactAddSchema), contactsController.updateContact)
 
-contactsRouter.put('/:contactId', isEmptyBody, isValidId, validateBody(contactSchemas.contactAddSchema), contactsController.updateContact)
-
-contactsRouter.patch('/:contactId/favorite', isValidId, validateBody(contactSchemas.contactUpdateFavoriteSchema), contactsController.updateContact )
+contactsRouter.patch('/:contactId/favorite', authenticate, isValidId, validateBody(contactSchemas.contactUpdateFavoriteSchema), contactsController.updateContact )
 
 
 export default contactsRouter;
