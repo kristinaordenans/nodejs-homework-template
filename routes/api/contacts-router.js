@@ -1,6 +1,6 @@
-import express from 'express'
+import express from 'express';
 
-import contactsController from '../../controllers/contacts-controller.js'
+import contactsController from '../../controllers/contacts-controller.js';
 
 import { isValidId } from '../../middlewares/index.js';
 
