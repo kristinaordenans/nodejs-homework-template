@@ -10,7 +10,7 @@ import validateBody from '../../decorators/validateBody.js';
 
 import contactSchemas from '../../schemas/contact-schemas.js';
 
-import isEmptyBody from '../../middlewares/isEmptyBody.js'
+import isEmptyBody from '../../middlewares/isEmptyBody.js';
 
 
 const contactsRouter = express.Router()
