@@ -2,21 +2,30 @@ import express from 'express'
 
 import contactsController from '../../controllers/contacts-controller.js'
 
-import isValidId from '../../middlewares/isValid.js'
+import { isValidId } from '../../middlewares/index.js';
+
+import {authenticate} from '../../middlewares/index.js';
+
+import validateBody from '../../decorators/validateBody.js';
+
+import contactSchemas from '../../schemas/contact-schemas.js';
+
+import isEmptyBody from '../../middlewares/isEmptyBody.js'
+
 
 const contactsRouter = express.Router()
 
-contactsRouter.get('/', contactsController.getList )
+contactsRouter.get('/',authenticate, contactsController.getList )
 
-contactsRouter.get('/:contactId', isValidId, contactsController.getContactById )
+contactsRouter.get('/:contactId',authenticate, isValidId, contactsController.getContactById )
 
-contactsRouter.post('/',contactsController.addContact )
+contactsRouter.post('/',authenticate, isEmptyBody, validateBody(contactSchemas.contactAddSchema),contactsController.addContact )
 
-contactsRouter.delete('/:contactId', isValidId, contactsController.delContact )
+contactsRouter.delete('/:contactId', authenticate, isValidId, contactsController.delContact )
 
-contactsRouter.put('/:contactId', isValidId, contactsController.updateContact)
+contactsRouter.put('/:contactId', authenticate, isEmptyBody, isValidId, validateBody(contactSchemas.contactAddSchema), contactsController.updateContact)
 
-contactsRouter.patch('/:contactId/favorite', isValidId, contactsController.updateContact )
+contactsRouter.patch('/:contactId/favorite', authenticate, isValidId, validateBody(contactSchemas.contactUpdateFavoriteSchema), contactsController.updateContact )
 
 
 export default contactsRouter;

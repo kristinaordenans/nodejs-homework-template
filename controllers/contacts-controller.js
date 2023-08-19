@@ -1,18 +1,13 @@
-
-// import contactsService from '../models/contact.js'
-
 import Contact from '../models/contact.js'
 
 import cnrWrapper from '../decorators/cnrWrapper.js';
 
 import HttpError  from '../helpers/HttpError.js'
 
-import contactAddSchema from '../schemas/contact-schemas.js'
-
-import contactUpdateFavoriteSchema from '../schemas/contact-schemas.js'
 
 const getList = async (req, res, next) => {
-    const result = await Contact.find();
+    const { _id: owner } = req.user;
+    const result = await Contact.find({owner}).populate("owner");
     res.json(result);
 }
 
@@ -25,12 +20,10 @@ const getContactById = async (req, res) => {
     res.json(result);
 }
 
-const addContact = async (req, res, next) => { 
-    const { error } = contactAddSchema.validate(req.body)
-    if (error) {
-      throw HttpError(400,"missing required name field")
-    }
-    const result = await Contact.create(req.body);
+const addContact = async (req, res) => { 
+  console.log(req.user)
+  const { _id: owner } = req.user;
+    const result = await Contact.create({...req.body, owner });
     res.status(201).json(result);
 }
 
@@ -44,10 +37,6 @@ const delContact = async (req, res) => {
 }
 
 const updateContact = async (req, res, next) => {
-    const { error } = contactAddSchema.validate(req.body)
-    if (error) {
-      throw HttpError(400,"missing fields")
-    }
     const { contactId } = req.params;
     const result = await Contact.findByIdAndUpdate(contactId, req.body, {new:true});
     if (!result) {
@@ -57,10 +46,6 @@ const updateContact = async (req, res, next) => {
 }
 
 const updateFavorite = async (req, res, next) => {
-    const { error } = contactUpdateFavoriteSchema.validate(req.body)
-    if (error) {
-      throw HttpError(400,"missing fields")
-    }
     const { contactId } = req.params;
     const result = await Contact.findByIdAndUpdate(contactId, req.body, {new:true});
     if (!result) {
