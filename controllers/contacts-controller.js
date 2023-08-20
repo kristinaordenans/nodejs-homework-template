@@ -1,8 +1,11 @@
-import Contact from '../models/contact.js'
+// import fs from 'fs/promises';
+// import path from 'path';
+
+import Contact from '../models/contact.js';
 
 import cnrWrapper from '../decorators/cnrWrapper.js';
 
-import HttpError  from '../helpers/HttpError.js'
+import HttpError from '../helpers/HttpError.js';
 
 
 const getList = async (req, res, next) => {
@@ -20,8 +23,17 @@ const getContactById = async (req, res) => {
     res.json(result);
 }
 
+// const avatarPath = path.resolve("public", "avatars")
+
 const addContact = async (req, res) => { 
   const { _id: owner } = req.user;
+  // console.log(req.body);
+  // console.log(req.file);
+  // const { path: oldPath, filename } = req.file;
+  // const newPath = path.join(avatarPath, filename)
+  // await fs.rename(oldPath, newPath);
+
+  
     const result = await Contact.create({...req.body, owner });
     res.status(201).json(result);
 }
