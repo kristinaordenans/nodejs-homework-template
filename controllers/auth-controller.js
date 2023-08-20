@@ -2,17 +2,11 @@ import fs from 'fs/promises';
 import path from 'path';
 import gravatar from "gravatar";
 import Jimp from "jimp";
-
 import bcrypt from 'bcryptjs';
-
 import jwt from 'jsonwebtoken';
-
 import "dotenv/config";
-
 import User from '../models/user.js';
-
 import cnrWrapper from '../decorators/cnrWrapper.js';
-
 import HttpError from '../helpers/HttpError.js';
 
 const { JWT_SECRET } = process.env;
