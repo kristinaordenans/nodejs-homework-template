@@ -13,4 +13,8 @@ const userLoginSchema = Joi.object({
     email: Joi.string().pattern(emailRegex).required(),
 })
 
-export default {userSignupSchema, userLoginSchema};
+const userEmailSchema = Joi.object({
+    email: Joi.string().pattern(emailRegex).required(),
+})
+
+export default {userSignupSchema, userLoginSchema, userEmailSchema};
